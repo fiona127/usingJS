@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import Header from './Header';
-import data from '../testData';
+//import data from '../testData';
 import ContestPreview from './ContestPreview';
 
 
 class App extends React.Component {
     state = { 
-        pageHeader: 'Naming Contests'
+        pageHeader: 'Naming Contests',
+        contests: this.props.initialContests
     };
     componentDidMount() {
-       //timers, listeners
+
     }
     componentWillUnmount() {
         //clean timers, listeners
@@ -22,14 +24,13 @@ class App extends React.Component {
             <div className="App">
                 <Header message={this.state.pageHeader}/>
                 <div>
-                    {this.props.contests.map(contest =>
-                        <ContestPreview {...contest} />
+                    {this.state.contests.map(contest =>
+                        <ContestPreview key={contest.id} {...contest} />
                     )}
-                    
                 </div>
             </div>
         );
     }
-};
+}
 
 export default App;
