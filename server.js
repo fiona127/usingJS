@@ -4,7 +4,10 @@ import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
 
 import express from 'express';
+import bodyParser from 'body-parser';
+
 const server = express();
+server.use(bodyParser.json());
 
 server.use(sassMiddleware({
     src: path.join(__dirname, 'sass'),
@@ -23,7 +26,10 @@ server.get(['/', '/contest/:contestId'], (req, res) => {
                 initialData
             });
         })
-        .catch(console.error); 
+        .catch(error => {
+            console.error(error);
+            res.send(error.toString());
+        }); 
 });
 
 server.use('/api', apiRouter);
